@@ -6,7 +6,7 @@ c = a + '0';
 }
 
 2.怎么使控制台exe.运行完程序后不退出：
-在return(0)前面加上while(1)或者system('pause')或者getchar
+在return(0)前面加上while(1)或者system('pause')或者getchar()
 
 3.for(;(c=getchar())!='\n';)  cout<<c;
 输入一个字符后立即输出该字符，直到遇到换行符为止
@@ -14,9 +14,8 @@ c = a + '0';
 
 4.for (int i = 0; i < 10; i++)  cin >> a[i]：这种可以直接输入十个数，也可以一个一个输入
 
-5.const char  *p;					//使用字符指针时必须在把指针定义为const
+5.const char  *p;					//使用字符指针时必须把指针定义为const
 p = "I love china!";			    //字符串常量不用加取地址
 cout << p << endl;
-return 0;
 ```
 
