@@ -707,13 +707,15 @@ double f;
 
 ### 枚举类型
 
-枚举(enumeration)类型的枚举变量只能用几种不同的取值。
+枚举(enumeration)类型的枚举变量只能用几种不同的取值。利用枚举变量可以把变量的值限制在一定范围内。
 
 ```c++
-enum weekday{sun,mon,tue,wed,thu,fri,st};   //声明枚举类型
+enum weekday{sun,mon,tue,wed,thu,fri,sat};   //声明枚举类型
 weekday week1;    //定义枚举变量
-//枚举元素按常量处理，故称枚举常量，不能对枚举元素赋值。枚举元素的值按顺序自动赋值为0，1，2...
-//可以把枚举元素赋给枚举变量，如week1=sun;可以输出枚举变量，但输出的是整数，如cout<<week1输出的是0
+//枚举元素按常量处理，故称枚举常量，不能对枚举元素赋值。
+//枚举元素的值按顺序自动赋值为0，1，2...相当于设置了符号常量，可以进行数值运算，如for(int i=sun;i<=sat;i++)。
+//可以输出枚举变量，但输出的是整数，如cout<<week1输出的是0
+//不能把一个整数直接赋给一个枚举变量，枚举变量只能接受枚举类型数据，如week1=tue;要把整数赋给枚举变量，必须进行强制类型转换，如week1=weekday(2),相当于week1=tue;
 ```
 
 ### 用typedef声明新的类型名
@@ -727,7 +729,7 @@ weekday week1;    //定义枚举变量
 
 ```c++
 typedef int INTEGER  
-typedef struct
+typedef struct    //这里不要写结构体类型名
 {
     int month;
     int day;
