@@ -752,3 +752,5 @@ typedef int (*Pointer_to_Function)()   //声明Pointer_to_Function为指向函�
 
 
 # C++面向对象编程
+
+## 1.类和对象
