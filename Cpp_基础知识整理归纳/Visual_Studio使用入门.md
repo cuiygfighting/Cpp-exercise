@@ -27,3 +27,5 @@
 版本库中一般保存.cpp,.sln,.vcxproj,.vcxproj.filter文件就可以了。
 
 一个解决方案中可以有多个project，但一个project只能有一个main函数，但可以有很多源文件和头文件，需要自己主动添加到项目中。在ctrl+F5运行时需要先指定要运行哪个项目。
+
+1
