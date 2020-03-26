@@ -1,3 +1,2 @@
 # Cpp-exercise
 
-1.
