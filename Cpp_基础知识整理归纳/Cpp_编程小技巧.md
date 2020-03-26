@@ -19,4 +19,3 @@ p = "I love china!";			    //字符串常量不用加取地址
 cout << p << endl;
 ```
 
-2.
