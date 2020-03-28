@@ -1,11 +1,11 @@
 #include <Sqlist.h>
-void swap();
 class sort
 {
 public:
 	void Bubble();
 	void Select();
 	void display();
+	void swap(SqVector, int , int );
 private:
 	int a;
 };
