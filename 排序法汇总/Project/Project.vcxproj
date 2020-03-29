@@ -127,8 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Bubble.cpp" />
+    <ClCompile Include="..\cinnumber.cpp" />
     <ClCompile Include="..\display.cpp" />
+    <ClCompile Include="..\Insert.cpp" />
     <ClCompile Include="..\Main.cpp" />
+    <ClCompile Include="..\restore.cpp" />
+    <ClCompile Include="..\Select.cpp" />
     <ClCompile Include="..\swap.cpp" />
   </ItemGroup>
   <ItemGroup>
