@@ -130,10 +130,14 @@
     <ClCompile Include="..\Bubble.cpp" />
     <ClCompile Include="..\cinnumber.cpp" />
     <ClCompile Include="..\display.cpp" />
+    <ClCompile Include="..\Heap.cpp" />
     <ClCompile Include="..\Insert.cpp" />
     <ClCompile Include="..\Main.cpp" />
+    <ClCompile Include="..\Merge.cpp" />
+    <ClCompile Include="..\Quik.cpp" />
     <ClCompile Include="..\restore.cpp" />
     <ClCompile Include="..\Select.cpp" />
+    <ClCompile Include="..\Shell.cpp" />
     <ClCompile Include="..\swap.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,18 @@
     <ClCompile Include="..\Insert.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Shell.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Heap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Merge.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Quik.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sort.h">

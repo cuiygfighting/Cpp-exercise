@@ -4,11 +4,34 @@ class sort
 public:
 	void cinnumber();
 	void restore();
+	//√∞≈›≈≈–Ú
 	void Bubble();
 	void Bubble_optimize1();
 	void Bubble_optimize2();
+	//÷±Ω”≤Â»Î≈≈–Ú
 	void Insert();
+	//—°‘Ò≈≈–Ú
 	void Select();
+	//œ£∂˚≈≈–Ú
+	void Shell();
+	//∂—≈≈–Ú
+	void Heap();
+	void HeapAdjust(int s, int m);
+	//πÈ≤¢≈≈–Ú
+	void MSort(int first, int last);
+	void MergeAdjust(int first, int mid, int last);
+	void Merge();
+	void MergePass(int increment, int last);
+	void Merge_optimize();
+	//øÏÀŸ≈≈–Ú
+	int    QuikPartition(int first, int last);
+	int    QuikPartition_optimize1(int first, int last);
+	int    QuikPartition_optimize2(int first, int last);
+	void QSort(int first, int last);
+	void QSort_optimize1(int first, int last);
+	void QSort_optimize2(int first, int last);
+	void Quik();
+
 	void display();
 	void swap( int , int );
 private:

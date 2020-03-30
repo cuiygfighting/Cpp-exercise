@@ -6,12 +6,8 @@ int main()
 {
 	sort sort1;
 	sort1.cinnumber();
-
-	sort1.Insert();
-	sort1.display();
-	sort1.restore();
 	
-	sort1.Bubble();
+	/*sort1.Bubble();
 	sort1.display();
 	sort1.restore();
 
@@ -24,6 +20,30 @@ int main()
 	sort1.restore();
 	
 	sort1.Select();
+	sort1.display();
+	sort1.restore();
+
+	sort1.Insert();
+	sort1.display();
+	sort1.restore();
+
+	sort1.Shell();
+	sort1.display();
+	sort1.restore();
+
+	sort1.Heap();
+	sort1.display();
+	sort1.restore();
+
+	sort1.Merge();
+	sort1.display();
+	sort1.restore();*/
+
+	sort1.Merge_optimize();
+	sort1.display();
+	sort1.restore();
+
+	sort1.Quik();
 	sort1.display();
 	sort1.restore();
 
