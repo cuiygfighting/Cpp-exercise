@@ -751,10 +751,78 @@ typedef int (*Pointer_to_Function)()   //声明Pointer_to_Function为指向函�
 
 
 
-# C++面向对象编程
+# C++面向对象编程(OOP-Object Oriented Programing)
 
 ## 1.类和对象
 
 ## 2.继承
 
 ## 3.多态
+
+
+
+# C++泛型编程(generic programing)
+
+## 2.标准模板库STL
+
+STL是C++标准的组成部分，不是面向对象编程，而是一种不同的编程模式——泛型编程。
+
+STL提供一组表示容器/迭代器/函数对象和算法的模板，能够构造各种容器(包括数组/队列/链表等)和执行各种操作(包括搜索/排序和随机排列等)。
+
+容器是一个与数组类似的单元，可以动态的存储若干个类型一样的值。
+
+算法是完成特定任务(如对数组进行排序和在链表中查询特定的值)的处方。
+
+函数对象是类似于函数的对象，可以是类对象或函数指针(包括函数名,因为函数名被用作指针)。
+
+### 模板类vector(矢量)
+
+是一种容器类，可以用来创建动态数组，使用动态内存分配，在使用时要#include <vector>
+
+创建一维动态矢量：vector<int>  Nums(n)，矢量中含有n个int 变量，Nums就是一个对象，Nums[2]表示矢量中的第3个元素。
+
+创建二维动态矢量：vector<vector<int>> Nums，默认为0个元素。Nums\[2][3]，可以像数组一样用[]随机访问元素。
+
+所有的STL容器都提供了一些基本，vector模板类也可以使用，如:
+
+```c++
+Nums[2].size()   //返回Nums[2]容器中的元素个数
+Nums.size()      //返回Nums容器中总的元素个数
+Nums[2].swap(Nums[3])  //交换两个容器的内容
+Nums.begin()    //返回一个指向容器第一个元素的迭代器
+Nums.end()      //返回一个表示超过容器尾的迭代器
+Nums[1].empty()  //若Num[1]为空则返回true
+vector<int> NewNums(Nums)  //可以用一个已有的矢量去初始化一个新矢量
+Nums.push_back(a) //在矢量末尾插入一个元素
+Nums.erase(Nums.begin(),Nums.begin()+2)//删除Nums矢量第一个和第二个元素
+Nums.insert(a)//在头部插入一个元素
+Nums.insert(Nums.end(),Other.begin()+1,Other.end())//将Other矢量的第2个到最后一个元素插到Nums的末尾
+Nums.insert(Nums.begin(),Other.begin(),Other.begin()+2)//将Other矢量的第1个到第2个元素插到Nums的头部
+```
+
+#### 迭代器
+
+迭代器是一个广义指针，指向容器，能够用来遍历容器的对象，还可以通过解除引用算符*来引用容器，让STL能够为各种不同的容器类(包括那些简单指针无法处理的类)提供统一的接口。
+
+```
+声明迭代器:vector<int>::iterator p;//每一个容器类都定义了一个合适的迭代器，该迭代器的类型是一个名为iterator的typedef
+for(p=Nums[1].begin();p!=Nums[1].end();p++)
+cout<<*p;
+```
+
+#### 可对矢量执行的其他操作
+
+STL从更广泛的角度定义了一些非成员函数，可用于操作所有容器类，但并不是容器的成员函数。
+
+```c++
+for(p=Nums[1].begin();p!=Nums[1].end();p++)
+Show(*p);
+等价于：for_each(Nums.begin(),Nums.end(),Show)//前两个是定义容器中区间的迭代器,最后一个是指向函数的指针，即函数对象
+
+Random_shuffle(Nums.begin(),Nums.end())//Random_shuffle函数接受两个指定区间的迭代器参数，并随即排列该区间中的元素
+    
+sort(Nums.begin(),Nums.end())
+//Sort函数可以对容器指定区间的元素进行排序。如果容器元素是用户自定义的对象，需要先对容器元素类型重载运算符<，如果是基类型则不必。
+sort(Nums.begin(),Nums.end(),WorseThan)//可以按照WorseThan定义的比较方法对容器中的元素进行排序
+```
+
