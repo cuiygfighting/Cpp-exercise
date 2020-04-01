@@ -119,6 +119,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\array.cpp" />
+    <ClCompile Include="..\dynamic.cpp" />
+    <ClCompile Include="..\iteration.cpp" />
     <ClCompile Include="..\main函数.cpp" />
     <ClCompile Include="..\recur.cpp" />
   </ItemGroup>

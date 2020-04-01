@@ -24,5 +24,11 @@
     <ClCompile Include="..\array.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\iteration.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dynamic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
