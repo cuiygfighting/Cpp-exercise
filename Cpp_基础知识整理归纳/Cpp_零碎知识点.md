@@ -45,4 +45,4 @@ char *pc = NULL;
 
 nullptr的类型为nullptr_t，能够隐式的转换为任何指针。
 
-所以用空指针就尽可能的使用nullptr。
+所以要返回一个自定义的指针类型的空指针需要用return nullptr。但在判断时都可以用pHead==NULL这种。
