@@ -14,7 +14,7 @@
 class PrintListFromTailtoHead         //µÝ¹é·¨£¬Í·²å
 {
 public:
-	vector<int> printListFromTailToHead(ListNode* head)
+	vector<int> printListFromTailToHead(ListNode* head)==]-[p]
 	{
 		vector<int> array;
 		if (head != NULL)
