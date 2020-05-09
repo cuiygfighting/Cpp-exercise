@@ -11,15 +11,29 @@
 *  };
 */
 
+class PrintListFromTailtoHead         //µÝ¹é·¨£¬Î²²å
+{
+public:
+	vector<int> res;
+	vector<int> printListFromTailToHead(ListNode* head) {
+		if (head != NULL)
+		{
+			if (head->next != NULL) printListFromTailToHead(head->next);
+			res.push_back(head->val);
+		}
+		return res;
+	}
+}£»
+
 class PrintListFromTailtoHead         //µÝ¹é·¨£¬Í·²å
 {
 public:
-	vector<int> printListFromTailToHead(ListNode* head)==]-[p]
+	vector<int> printListFromTailToHead(ListNode* head)
 	{
 		vector<int> array;
 		if (head != NULL)
 		{
-			array.insert(array.begin,head->val)
+			array.insert(array.begin(), head->val);
 				if (head->next != NULL)
 				{
 					vector<int> temp;
@@ -31,22 +45,6 @@ public:
 	}
 };
 
-class PrintListFromTailtoHead         //µÝ¹é·¨£¬Î²²å
-{
-public:
-	vector<int> value;
-	vector<int> printListFromTailToHead(ListNode* head)
-	{
-		ListNode* p = head;
-		if (p != NULL)
-		{
-			if (p->next != NULL) printListFromTailToHead(p->next);
-			value.push_back(p->val);
-		}
-		return value;
-	}
-
-}£»
 
 class PrintListFromTailtoHead         //µü´ú·¨£¬Í·²å
 {
