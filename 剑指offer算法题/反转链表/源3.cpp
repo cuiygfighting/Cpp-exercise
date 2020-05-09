@@ -29,7 +29,8 @@ public:
 class Solution {                                ////第二种方法是：递归方法
 public:
 	ListNode * ReverseList(ListNode* pHead) {
-		if (pHead == NULL || pHead->next == NULL) return pHead;
+		if (!pHead) return nullptr;
+		if (!pHead->next) return pHead;
 		ListNode* ReversePhead = ReverseList(pHead->next);
 		pHead->next->next = pHead;
 		pHead->next = NULL;
