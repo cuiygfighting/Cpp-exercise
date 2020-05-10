@@ -817,7 +817,7 @@ typedef int (*Pointer_to_Function)()   //声明Pointer_to_Function为指向函�
 
 ### 构造函数
 
-
+C++提供了构造函数(constructor)来进行对象的初始化，构造函数是一种特殊的成员函数，不需要用户来调用它，而是在建立对象时自动执行。
 
 
 
