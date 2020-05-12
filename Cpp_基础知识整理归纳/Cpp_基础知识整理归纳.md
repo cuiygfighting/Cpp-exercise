@@ -860,7 +860,7 @@ class Time
 
 int main()
 {
-    Time tim1;           //建立对象时调用默认构造函数
+    Time tim1;           //建立对象时调用默认构造函数，不要用Time tim1();
     Time tim1(20,10);    //建立对象的同时指定数据成员的初值
     Time times[50]={
         Time(1,1),Time(2,2),Time(10,10)
@@ -877,6 +877,10 @@ int main()
 
 ```c++
  Time *p;Time tim1;p=&tim1;             可以用(*p).hour;p->hour;p->display();访问对象的公有成员
+     
+对象的动态建立与释放：
+     用类名 *指针变量名=new 类名(初始化参数) //创建并初始化匿名对象，如Time *p=new Time(10,20);
+     delete p;                    //撤销p指向的内存单元，在释放匿名对象的内存单元之前，会自动调用析构函数，完成有关善后清理工作
 ```
 
 #### 指向对象成员的指针：
