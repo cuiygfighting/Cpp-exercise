@@ -879,6 +879,36 @@ tim1=tim2;
     注意：对象的赋值是对一个已经存在的对象赋值，因此必须先定义被赋值的对象。而对象的复制则是从无到有建立一个新对象，使之与已有对象完全相同。
 ```
 
+### 类模板
+
+类模板是对类的抽象，类是类模板的实例。利用类模板可以建立含各种数据类型的类，使类的使用不受限于数据类型。
+
+```c++
+template<class numtype1,class numtype2>  //可以定义一个或多个类型参数名
+    class Time
+    {
+        public:
+        Time(numtype1 a,numtype2 b);
+        int ss()        //类模板中可以有具体的类型名。利用虚拟类型名只是会在传递具体参数类型时，用具体参数类型替换虚拟类型。
+        {
+            return hour*minute;
+        }
+        void dispaly();
+        private:
+        numtype1 hour;
+        numtype2 minute;
+    }；
+    template<class numtype1,class numtype2>
+    void Time<numtype1,numtype2>::diaplay()
+    {
+        cout<<hour<<minute;  //在类模板体外定义成员函数时需要把template虚拟参数表再写一遍，并加上类名<虚拟类型参数表>
+    }
+    int main()
+    {
+        Time<int,flaot> tim1(10,20); //用类模板定义对象。
+    }
+```
+
 ### 对象指针
 
 #### 指向对象的指针:
@@ -1011,6 +1041,8 @@ int main()
 
 在类声明中将普通函数，其他类的成员函数或者其他类声明为友员，使不属于本类的函数可以访问本类的私有成员。
 
+面向对象的程序设计的一个基本原则是封装性和信息屏蔽，而友员却可以访问其他类的私有成员，也是对封装原则的一个小小的破坏。但是却能有助于数据共享，提高程序的效率，在实际使用在要在数据共享和信息屏蔽之间找一个恰当的平衡点。
+
 ```c++
 class Date;   //由于下面Time中出现了Date,需要对其做提前引用声明,只包含类名，不包含类体
 class Time
@@ -1018,7 +1050,7 @@ class Time
     public:
     friend void s1(Time&);    //将普通函数声明为友员函数
     friend void Date::s2(Time&); //将其他类的函数成员声明为友元函数
-    friend Display;   //声明友元类。友元类的所有成员函数都可以访问其私有成员。
+    friend Display;   //声明友元类。友元类的所有成员函数都是其友元函数。友员的关系是单向的不是双向的，且友员的关系不能传递。
     private:
     int hour;
     int minute;
@@ -1049,8 +1081,6 @@ int main()
     dat1.s2(tim1);
 }
 ```
-
-
 
 ## 2.继承
 
