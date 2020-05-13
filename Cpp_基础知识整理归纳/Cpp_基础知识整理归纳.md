@@ -634,9 +634,9 @@ void swap(int &i,int &j)  //引用作为形参
 }
 
 /*
-前两种方式传递的都是实参的值，属于传值方式。第一种传递的是变量的值，第二种传递的是指针变量的值(即地址)，这两种方式在调用函数过程中都不能改变实参的值。且在调用函数过程中需要为形参分配存储单元，用来接收实参的值，实参和形参的存储单元不同，第一种方式开辟的空间与实参所需空间相同(可能需要很多个字节)，第二种方式需要开辟一个空间存放指针(一般为4个字节)。虽然第二中方式可以通过形参指针变量改变实参的值，但是却兜了一个圈子，不那么直接了当。
+前两种方式传递的都是实参的值，属于传值方式，会开辟新的内存单元，进行虚实结合。第一种传递的是变量的值，第二种传递的是指针变量的值(即地址)，这两种方式在调用函数过程中都不能改变实参的值。且在调用函数过程中需要为形参分配存储单元，用来接收实参的值，实参和形参的存储单元不同，第一种方式开辟的空间与实参所需空间相同(可能需要很多个字节)，第二种方式需要开辟一个空间存放指针(一般为4个字节)。虽然第二中方式可以通过形参指针变量改变实参的值，但是却兜了一个圈子，不那么直接了当。
 
-第三种方式传递的是实参的地址，属于传址方式。可以把实参的地址传递给形参，使形参作为实参的引用，使形参和实参的地址相同。改变形参即可直接改变实参，且不需要为形参额外开辟空间。这种方式更加方便直接。
+第三种方式传递的是实参的地址，属于传址方式。可以把实参的地址传递给形参，使形参作为实参的引用，使形参和实参的地址相同。改变形参即可直接改变实参，且不需要为形参额外开辟空间，不生成临时变量(实参的副本)。这种方式更加方便直接，减少了时间和空间的开销。
 */
 ```
 
@@ -1082,11 +1082,131 @@ int main()
 }
 ```
 
-## 2.继承
+## 2.运算符重载
+
+运算符重载(operator overloading)是定义一个重载运算符的函数，使指定的运算符不仅能实现原有的功能，还能够实现在函数中指定的新功能。运算符重载的本质是函数的重载。
+
+利用运算符重载，可以让类对象使用现有的运算符而不必重新定义一批新的运算符，扩大了C++已有运算符的使用范围，使程序易于编写、阅读和维护。
+
+运算符重载的一般格式为：
+
+​											函数类型  operator 运算符名(形参表)
+​													{对运算符的重载处理} 
+
+C++中绝大部分运算符都允许重载，但是不能重载的运算符有5个：
+.(成员访问运算符)	::(域域运算符)	*(成员指针访问运算符)	sizeof(长度运算符)	?:(条件运算符)
+
+重载运算符不改变运算符的运算对象的个数、优先级别、结合性，且不能有默认的参数。重载的运算符必须和用户自定义的结构体类型或类类型一起使用，其参数不能全是C++的标准类型，防止篡改用于标准类型数据的运算符的性质。
+
+```c++
+class Complex
+{
+    public:
+    Complex(){real=0;imag=0;}
+    Complex(int r,int i){real=r;imag=i;}
+    Complex complex_add(Complex &);
+    Complex operator +(Complex &);//把运算符重载函数作为类的成员函数
+    friend Complex operator +(Complex&c1,complex&c2);//把运算符重载函数作为类的友员函数
+    friend Complex operator +(int&num,complex&c2);
+    friend Complex operator +(complex&c2,int&num);//对于双目运算符，交换律不适用，需要重载两次
+    friend bool operator >(complex&c1,complex&c2);
+    Complex operator ++();//重载单目运算符，没有参数。为前置单目运算符重载函数。
+    Complex operator ++(int);//加一个int表明为后置单目运算符重载函数。
+    friend ostream& operator <<(ostream&,Complex &);//重载流插入运算符
+    friend istream& operator >>(istream&,Complex &);//重载流提取运算符
+    void display();
+    private:int
+    int real;
+    int imag;
+};
+//重载运算符只能把一个运算符用于指定的类，并不是用一个运算符重载函数就可以适用所有的类。
+Complex Complex::complex_add(Complex&c2)   //返回一个Complex对象的成员函数
+{
+    Complex c;
+    c.real=real+c2.real;
+    c.imag=imag+c2.imag;
+    return c;
+}
+Complex Complex::operator +(Complex &c2)  //定义重载运算符函数。
+{
+    Complex c;
+    c.real=real+c2.real;
+    c.iamg=imag+c2.imag;
+    return c;
+    //以上可以简写为return  Complex(real+c2.real,iamg+c2.iamg);
+}
+//将运算符重载函数声明为类的成员函数，它可以通过this指针自由地访问本类中的数据，可以少写一个形参。对于双目运算符，要求运算符左侧的操作数必须是一个类对象，且返回值类型必须是本类类型(否则定义这个运算符重载没有意义)。
+//而将运算符重载函数作为类的友员函数，是一个普通的函数，可以自由的指定运算符操作数的类型与返回值类型。
+Complex operator +(Complex&c1,Complex&c2)
+{
+    return  Complex(c1.real+c2.real,c1.iamg+c2.iamg)
+}
+Complex operator +(int&num,Complex&c2)
+{
+    return  Complex(num+c2.real,c2.iamg);
+}
+bool operator >(complex&c1,complex&c2)
+{
+    if(c1.real>c2.real) return true;
+    else return false;
+}
+bool compare(complex&c1,complex&c2)//这是一个普通的函数，只是形参是类对象，但不是类的友元函数，只能访问类对象的公用成员
+{
+    if(operator >(c1,c2)) return true;   //调用运算符重载函数operator >(c1,c2)
+    else return false;
+}
+Complex Complex::operator ++()
+{
+    ++real;
+    return *this;//先执行操作，再返回当前对象。
+}
+Complex Complex::operator ++(int)
+{
+    Complex temp(*this);
+    ++real;
+    return temp;//先返回当前对象，再对当前对象执行一定的操作。
+}
+//对象不能直接用<<或>>输入输出，必须进行运算符重载，且只能将运算符重载函数定义为友元函数
+ostream& operator <<(ostream& outputname,Complex &c)
+{//outputname是ostream类的对象，名字可以随便起
+    outputname<<c.real<<c.imag<<endl;
+    return outputname;//最后必须返回一个ostream类对象，用于连续插入
+}
+istream& operator >>(istream& inputname,Complex &c)
+{//iutputname是istream类的对象，名字可以随便起
+    inputname>>c.real>>c.imag;
+    return inputname;//最后必须返回一个istream类对象，用于连续提取
+}
+int main()
+{
+    Complex c1(1,2),c2(3,4),c3;
+    c3=c1.complex_add(c2);
+    c3=c1+c2;//相当于调用c1.operator +(c2);
+    c3=2+c1;//相对于调用operator +(2,c1);
+    c3=c1+2;//相对于调用operator +(c1,2);
+    c3=++c1;//调用前置单目运算符重载函数
+    c3=c1++;//调用后置单目运算符重载函数
+    cout<<c3<<c2;//调用operator <<(cout,c3),cout传递给outputname，返回一个cout对象。cout是一个ostream类对象。
+    //相对于(cout<<c3)<<c2，即cout(新值)<<c2.
+    //<<运算符重载函数的第一个参数和函数类型都必须是ostream类型的引用，就是为了返回cout的当前值以便连续输出。
+    cin>>c3>>c2;//调用operator >>(cin,c3),cin传递给inputname,返回一个cin对象。cin是一个istream类对象
+}
+```
+
+默认规则：
+
+1. 赋值运算符=,下标运算符[],函数调用运算符(),成员运算符->必须作为成员函数。
+2. 流插入运算符<<和流提取运算符>>，类型转换运算符只能作为友元函数。
+3. 一般将单目运算符与复合运算符(+=,++,/,!=,<<=,>>=,^=)作为成员函数。
+4. 一般将双目运算(+,-,<,>,==)符作为友员函数。
 
 
 
-## 3.多态
+## 3.继承
+
+
+
+## 4.多态
 
 
 
