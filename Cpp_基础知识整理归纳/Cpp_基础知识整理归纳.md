@@ -1364,6 +1364,8 @@ class D:public B,private C,protected A
 
 ## 4.多态性与虚函数
 
+#### 多态性的概念
+
 
 
 # C++泛型编程(generic programing)
