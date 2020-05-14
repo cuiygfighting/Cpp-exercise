@@ -1366,8 +1366,6 @@ class D:public B,private C,protected A
 
 #### 多态性的概念
 
-
-
 # C++泛型编程(generic programing)
 
 ## 2.标准模板库STL
