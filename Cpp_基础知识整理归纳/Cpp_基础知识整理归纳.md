@@ -1520,10 +1520,10 @@ while((c=cin.get())!=EOF)
 	
 	cin.ignore(n,终止字符);//跳过输入流中的n个字符，即后移指针，在遇到指定终止字符提前结束
 	cin.ignore();//不带参数，n默认为1，终止字符默认为EOF
-	
+//get,getline,eof,peek,putback,ignore是istream类的成员函数，put是ostream类的成员函数	
 ```
 
-#### 文件流
+#### 文件输入输出流
 
 文件指存储在外部介质上的数据的集合，系统是以文件为单位进行管理的。
 
@@ -1533,6 +1533,219 @@ ASCII文件：又称文本(txt)文件，它的每一个字节存放一个字符�
 二进制文件：又称内部格式文件或字节文件，是把内存中的数据按其在内存中的存储形式原样输出到磁盘上存放。并不知道文件中的各字节之间的连接关系，所以不知道各字节代表的实际数据是什么。
 
 对于字符信息，无论用ASCII形式保存还是二进制形式保存，其数据形式都是一样的；但是对于数值数据，二者是不同的，按ASCII码形式输出需要把内存中的数值先表示为一个字符串再将各个字符的ASCII码输出，而按二进制输出则直接将数值原样输出。用ASCII码形式输出的数据是与字符一一对应的，一个字节代表一个字符，可以直接在屏幕上显示或者打印出来。这种方式使用方便，比较直观，便于阅读，便于对字符逐个进行输入输出。但一般占的存储空间比较多，而且内存中的二进制数据转换为ASCII码需要花费转换时间；用二进制格式输出数值，可以节省外部空间，而且不需要转换时间，但一个字节并不代表一个字符，不能直接显示文件中的内容。如果在程序运行过程中，有些中间结果数据暂时保存在磁盘文件中，以后又需要输入到内存中这时用二进制文件保存是合理的。但如果是为了能显示和打印以供阅读，则应按ASCII码形式输出。二进制输入输出通常用来在内存和设备之间传输一批字节，这种输入输出速度快，效率高，适合大文件的传输。
+
+文件流本身不是文件，而是以文件为输入输出对象的流。
+有三个主要的文件输入输出流类:
+
+1. ifstream类，它是从istream类和fstreambase派生的，用来支持从磁盘文件的输入，支持>>
+2. ofstream类，它是从ostream和fstreambase类派生的，用来支持从磁盘文件的输出，支持<<
+3. fstream类，它是从iostream类和fstreambase派生的，用来支持对磁盘文件的输入输出，支持>>和<<.
+   以上三个类都在fstream头文件中声明。由于文件流类都重载了<<，>>，故对ASCII文件也可以用<<，>>。
+
+##### 文件的打开和关闭
+
+在对文件进行读写操作之前，先要打开文件。打开文件有以下两个目的：
+
+- 通过指定文件名，建立起文件和文件流对象的关联，以后要对文件进行操作时，就可以通过与之关联的**流对象**来进行。
+- 指明文件的使用方式。使用方式有只读、只写、既读又写、在文件末尾添加数据、以文本方式使用、以二进制方式使用等多种。
+
+打开文件可以通过以下两种方式进行：
+
+- 调用流对象的 open 成员函数打开文件。
+- 定义文件流对象时，通过构造函数打开文件。
+
+先看第一种文件打开方式。以 ifstream 类为例，该类有一个 open 成员函数，其他两个文件流类也有同样的 open 成员函数：
+
+```c++
+void open(const char* szFileName, int mode)
+第一个参数是指向文件名的指针(即"文件名"代表文件的地址)，第二个参数是文件的打开模式标记。
+    对象名.open("c:\\tmp\\f1.dat",ios::out); //注意\\代表\,或者写成r"c:\tmp\f1.dat"
+```
+
+第二种打开方式。在声明流类时定义了带参数的构造函数，其中包含了打开磁盘文件的功能，因此在定义流对象时可以在构造函数中给出文件名和打开模式也可以打开文件。以 ifstream 类为例，它有如下构造函数：
+
+```c++
+ifstream::ifstream (const char* szFileName, int mode = ios::in, int);
+第一个参数是指向文件名的指针；第二个参数是打开文件的模式标记，默认值为ios::in; 第三个参数是整型的，也有默认值，一般极少使用。
+    如istream infile("f1.dat",ios::in)
+```
+
+输入输出方式是在ios类中定义的枚举常量，如下表：
+
+![文件输入输出方式设置值](D:\My_Program_data\Cpp-exercise\Cpp_基础知识整理归纳\文件输入输出方式设置值.png)
+
+文件的打开模式标记代表了文件的使用方式，这些标记可以单独使用，也可以组合使用。如ios::in|ios::out|ios::binary，打开一个二进制文件，可读可写。
+
+```c++
+如果打开文件失败，open的返回值为0，流对象的值为0，可以据此来判断文件打开是否成功:
+if(!outfile.open("f1",ios::out))  //或if(!outfile)
+    cerr<<"open error";
+```
+
+在对已打开的文件读写完成后，应当及时关闭该文件。所谓关闭，即是解除文件与文件流对象的关联，原来设置的工作方式也失效。此时可以将文件类对象与其他文件建立关联，对新的文件进行操作。
+
+```c
+outfile.close();  //不需要任何参数
+```
+
+每打开一个文件都有一个文件指针(文件读写位置标记)，每次读写都从文件指针的当前位置开始，该指针的初始文件有I/O系统方式指定。每读入一个字节，指针就会向后移动一个一位。当指针到达文件末尾，此时流对象的成员函数eof的值为非0(一般设为1).
+与文件位置标记有关的成员函数：
+
+|        成员函数         |                       作用                       |
+| :---------------------: | :----------------------------------------------: |
+|        gcount()         |          得到最后一次输入所读入的字节数          |
+|         tellg()         |          得到输入文件位置标记的当前位置          |
+|         tellp()         |          得到输出文件位置标记的当前位置          |
+|   seekg(文件中的位置)   | 将输入文件的位置标记移到指定的位置(以开头为参照) |
+| seekg(位移量，参照位置) |           以参照位置为基础移动若干字节           |
+|   seekp(文件中的位置)   | 将输入文件的位置标记移到指定的位置(以开头为参照) |
+| seekp(位移量，参照位置) |           以参照位置为基础移动若干字节           |
+
+其中:g表示get，代表输入；p表示put，代表输出。文件中的位置和位移量被指定为long型整数，以字节为单位。
+参照位置包含：ios::beg：文件开头位置	ios::cur:位置标记当前位置	ios::end：文件末尾	//它们都是在ios类中定义的枚举常量
+如，infile(-50,ios::cur)，输入文件的位置标记从当前位置后移50个字节。 //负数代表后移，往文件开头移动，正数代表前移，往文件末尾移动
+
+##### 对ASCII文件操作：
+
+既可以用<<，>>，也可以用成员函数put,get,getline进行字符的输入输出
+
+```c
+//从键盘读入一行数据，把其中的字符依次存放在文件f1.txt中，再把它从该文件读入程序，将其中的小写字母改为大写字母，再存入f2.txt中。
+#include<fstream>
+#include<iostream> //有的编译系统在fstream中声明了iostream，就不需要这行
+using namespace std;
+void save_to_file(char *filename)
+{
+	ofstream outfile(filename, ios::out);
+	if (!outfile)
+	{
+		cerr << "open file error"; exit(1);//exit是系统函数，参数可以是任意整数，与abort()等价。
+	}
+	char c[80];
+	cin.getline(c, 80);
+	for(int i=0;c[i]!=0;i++)
+		if (c[i] >= 65 && c[i] <= 90 || c[i] >= 97 && c[i] <= 122)
+		{
+			//outfile.put(c[i]);   //将字符写入文件
+			outfile << c[i];       //可以直接用"输出文件流对象名<<数据"进行输出,但对ASCII文件每次只能输入输出一个字符
+			cout << c[i];
+		}
+	cout << endl;
+	outfile.close();
+}
+void get_from_file(char *filename1, char *filename2)
+{
+	ifstream infile(filename1, ios::in);
+	if (!infile)
+	{
+		cerr << "open file error"; exit(1);
+	}
+	ofstream outfile(filename2, ios::out);
+	if (!outfile)
+	{
+		cerr << "open file error"; exit(1);
+	}
+	char c;
+	while (infile>>c)    //读取成功则执行下面复合语句
+		//可以用infile.get(c)
+	{
+		if (c >= 97 && c <= 122)
+			c = c - 32;
+		outfile.put(c);
+		cout << c;
+	}
+	cout << endl;
+	outfile.close();
+	infile.close();
+}
+int main()
+{
+	save_to_file(R"(C:\Users\d\Desktop\temp.txt)");
+	get_from_file(R"(C:\Users\d\Desktop\temp.txt)", R"(C:\Users\d\Desktop\temp2.txt)");
+	return 0;
+}
+```
+
+##### 对二进制文件的操作
+
+打开二进制文件时必须指定ios::binary。而ASCII文件相比，ASCII不能同时输入输出，而二进制文件是既能输入又能输出的文件。
+对ASCII文件一般每次只读写一个字符，而二进制文件可以指定每次要读写的字节长度。ASCII文件读取是和一个变量联系的，而二进制文件读取适合一个指针联系的，可以用指针指定要读写的内存位置。
+
+对二进制文件的读写主要用istream类的成员函数read和ostream的成员函数write来实现。这两种函数的原型为：
+
+```c
+istream& read(char *buffer,int len);//在输入时，指针指向的内存数据会被改变
+ostream& write(const char *buffer,int len);//在输出时，不允许改变指针指向的内存中的数据
+buffer指向内存中的一段存储空间，len是读取的字节数。
+    调用方式为:
+a.write(p1,50);//将p1指向的内存单元开始的50个字节的内存数据不加转换地写到a中。
+b.read(p2,50);//从文件当前读写位置开始读取50个字节存放到p1指向的内存单元(或遇EOF结束)。
+二进制文件不用<<,>>
+```
+
+```c
+//用二进制文件处理5个学生的数据
+#include<fstream>
+#include<iostream> //有的编译系统在fstream中声明了iostream，就不需要这行
+using namespace std;
+struct Stu
+{
+	int num;
+	char name[20];
+	float score;
+};
+void dosomething(char *filename1,char *filename2,Stu stus[])
+{
+	fstream iofile(filename1, ios::out|ios::in|ios::binary);
+	//用fstream定义输入输出二进制文件流对象
+	if (!iofile)
+	{
+		cerr << "open file error"; abort();
+	}
+	for (int i = 0; i < 5; i++)
+		iofile.write((char*)&stus[i], sizeof(stus[i]));
+	Stu stus2[5];
+	for (int i = 0; i < 5; i=i + 2)
+	{
+		iofile.seekg(i * sizeof(stus[i]), ios::beg);
+		iofile.read((char*)&stus2[i/2], sizeof(stus[0]));//把第1，3，5学生的数据读出来
+		cout << stus2[i/2].num << stus2[i/2].name << stus2[i/2].score << endl;
+	}
+	ofstream outfile(filename2, ios::out | ios::binary);
+	if (!outfile)
+	{
+		cerr << "error"; abort();
+	}
+	for (int i = 0; i < 3; i++)   //将1，3，5学生写入文件2
+	{
+		outfile.write((char*)&stus2[i], sizeof(stus2[i]));
+	}
+	strcpy_s(stus[2].name, "Cuiyugui");   //strcpy的安全版本
+	stus[2].score = 1000;
+	iofile.seekp(2 * sizeof(stus[2]), ios::beg);
+	iofile.write((char*)&stus[2], sizeof(stus2[2]));
+	iofile.seekg(0, ios::beg);  //重新定位到文件开头
+	for (int i = 0; i < 5; i++)
+	{
+		iofile.read((char*)&stus[i], sizeof(stus[i]));
+	    cout << stus[i].num << stus[i].name << stus[i].score << endl;
+	}
+	iofile.close();
+	outfile.close();
+}
+int main()
+{
+	Stu stus[5] = {
+		1001,"cui",99,1002,"zhang",90,1003,"liu",89,1004,"shu",10,1005,"xiao",78
+	};
+	dosomething("C:/Users/d/Desktop/a1.dat", "C:/Users/d/Desktop/Untitled-2.dat",stus);
+	return 0;
+}
+```
+
+#### 字符串流
+
+
 
 ### 2.异常处理
 
