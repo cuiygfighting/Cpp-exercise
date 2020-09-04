@@ -20,9 +20,7 @@ public:
 				stack1.pop();
 			}
 		}
-		//temp = stack2.top();
 		stack2.pop();
-		//return temp;
 	}
 
 	int peek() {
