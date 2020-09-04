@@ -35,7 +35,6 @@ public:
 			}
 		}
 		temp = stack2.top();
-		//stack2.pop();
 		return temp;
 	}
 
