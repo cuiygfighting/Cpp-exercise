@@ -10,9 +10,18 @@
 #include<algorithm>
 #include<iterator>
 using namespace std;
+
+class Solution
+{
+    public:
+
+    private:
+};
 int main()
 {
-
-    cout<<2;
+    int a;
+    cin>>a;
+    cout<<a;
+    system("pause");
     return 0;
 }
