@@ -19,9 +19,6 @@ class Solution
 };
 int main()
 {
-    int a;
-    cin>>a;
-    cout<<a;
     system("pause");
     return 0;
 }
