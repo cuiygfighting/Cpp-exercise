@@ -17,7 +17,7 @@ int main()
 	string tmp;
 	for (int i = 0; i<n; i++)
 	{
-		cin >> tmp;
+		cin >> tmp;  
 		res.push_back(tmp);
 	}
 	sort(res.begin(), res.end());
@@ -29,7 +29,6 @@ int main()
 /*
 输入描述:
 多个测试用例，每个测试用例一行。
-
 每行通过空格隔开，有n个字符，n＜100
 输出描述:
 对于每组测试用例，输出一行排序过的字符串，每个字符串通过空格隔开*/
@@ -40,7 +39,7 @@ int main()
 {
 	string tmp;
 	vector<string> res;
-	while (cin >> tmp)             //输入结束后会自动跳出循环
+	while (cin >> tmp)             
 	{
 		res.push_back(tmp);
 		if (cin.get() == '\n')
