@@ -1,23 +1,13 @@
-#include <iostream>
-#include <cstdio>
+#include<iostream>
 using namespace std;
+#include<algorithm>
 #include<vector>
-#include<string>
 int main()
 {
-	int n;
-	cin >> n;
-	cin.get();
+	vector<string> res;
 	string tmp;
-	vector<vector<string>> s;
-	for (int i = 0; i<n; i++)
-	{
-		while (cin >> tmp)
-		{
-			s[i].push_back(tmp);
-			if (cin.get() == '\n') break;
-		}
-	}
-	cout << s[0][0];
+    cin>>tmp;
+    cout<<endl<<tmp;
+    while(1);
 	return 0;
 }
