@@ -19,6 +19,7 @@ class Solution
 };
 int main()
 {
+    cout<<2;
     system("pause");
     return 0;
 }
