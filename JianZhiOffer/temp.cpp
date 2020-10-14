@@ -19,7 +19,10 @@ class Solution
 };
 int main()
 {
-    cout<<2;
+    string a,b;
+    cin>>a;
+    cin>>b;
+    
     system("pause");
     return 0;
 }
