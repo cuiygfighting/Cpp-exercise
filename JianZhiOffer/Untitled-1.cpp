@@ -4,10 +4,8 @@ using namespace std;
 #include<vector>
 int main()
 {
-	vector<string> res;
-	string tmp;
-    cin>>tmp;
-    cout<<endl<<tmp;
+    uint32_t x=1;
+    decltype(x++) y=2;
+    cout<<x<<" "<<y<<endl;
     while(1);
-	return 0;
 }
