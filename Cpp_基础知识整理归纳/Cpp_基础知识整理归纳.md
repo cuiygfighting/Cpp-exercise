@@ -1976,7 +1976,7 @@ for(p=Nums[1].begin();p!=Nums[1].end();p++)
 Show(*p);
 等价于：for_each(Nums.begin(),Nums.end(),Show)//前两个是定义容器中区间的迭代器,最后一个是指向函数的指针，即函数对象
 
-Random_shuffle(Nums.begin(),Nums.end())//Random_shuffle函数接受两个指定区间的迭代器参数，并随即排列该区间中的元素
+Random_shuffle(Nums.begin(),Nums.end())//Random_shuffle函数接受两个指定区间的迭代器参数，并随机排列该区间中的元素
     
 sort(Nums.begin(),Nums.end())
 //Sort函数可以对容器指定区间的元素进行排序。如果容器元素是用户自定义的对象，需要先对容器元素类型重载运算符<，如果是基类型则不必。
